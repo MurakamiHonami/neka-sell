@@ -1,4 +1,3 @@
-import { isEditable } from "@testing-library/user-event/dist/utils";
 import React, { useState } from "react";
 
 interface UserInfo{

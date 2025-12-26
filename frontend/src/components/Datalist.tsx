@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Data } from "../types/Data"
 import { fetchData } from "../service/DataService";
 
@@ -19,7 +19,10 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
         state: true
     });
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    
+    const [canSell, setCanSell]=useState(false);
+    const [rakutenItems, setRakutenItems]=useState<any[]>([]);
+    const [maxPrice, setMaxPrice]=useState(0);
+
     useEffect(() => {
         fetchData()
             .then((data) => {
@@ -105,6 +108,34 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
         }
     };
 
+
+    const checkCanSell = async () => {
+        if (!image) return;
+        setRakutenItems([]);
+        const formData = new FormData();
+        formData.append("image",image);
+
+        try {
+            const response = await fetch("http://localhost:5000/api/search",{
+                method: "POST",
+                body: formData
+            });
+    
+            const result = await response.json();
+            if (result.rakutenItems && result.rakutenItems.length > 0) {
+                alert("出品可能な商品が見つかりました");
+                setRakutenItems(result.rakutenItems);
+                setCanSell(true);
+            } else {
+                alert("出品できる商品が見つかりませんでした")
+                setCanSell(false);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("検索中にエラーが発生しました");
+        }
+    };
+
     return (
         <div>
             <h2>商品一覧</h2>
@@ -131,6 +162,49 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
             </ul>
             <h2>出品</h2>
             <form>
+                {rakutenItems.length > 0 && (
+                    <div style={{
+                        border: "2px solid aqua",
+                        padding: "10px",
+                        margin: "10px 0",
+                        borderRadius: "8px",
+                    }}>
+                        <h3>出品可能な商品<small>(楽天ブックスから検索)</small></h3>
+                        <div style={{maxHeight: "300px", overflowY: "scroll"}}>
+                            {rakutenItems.map((item, index)=>(
+                                <div
+                                    key={index}
+                                    style={{
+                                        display: "flex",
+                                        gap: "10px",
+                                        padding: "10px",
+                                        alignItems: "center",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={()=>{
+                                        setProductInfo({
+                                            ...productInfo,
+                                            name: item.name,
+                                            price: item.price
+                                        });
+
+                                        setMaxPrice(item.price)
+                                        setRakutenItems([]);
+                                    }}
+                                >
+                                    <img src={item.imageUrl} alt={item.name} style={{ width:"60px", height: "60px", objectFit: "cover"}}/>
+                                    <div>
+                                        <p>{item.name}</p>
+                                        <p>{item.price.toLocaleString()}円</p>
+                                        <p>発売日:{item.releaseDate}</p>
+                                        <button type="button">これを選択</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>
+                )}
                 <p>
                     商品名:
                     <input
@@ -144,9 +218,9 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                     <input
                         type="number"
                         value={productInfo.price}
-                        onChange={e => setProductInfo({...productInfo, price:e.target.valueAsNumber})}
+                        onChange={e => setProductInfo({...productInfo, price:e.target.valueAsNumber || 0})}
                         min="0"
-                        max="999999"
+                        max={maxPrice}
                     />
                 </p>
                 <p>
@@ -163,7 +237,10 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                         </div>
                     )}
                 </p>
-                <button type="button" onClick={submitProduct}>保存</button>
+                <button type="button" onClick={checkCanSell}>ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
+                {canSell &&
+                    <button type="button" onClick={submitProduct}>出品</button>
+                }
             </form>
         </div>
     )

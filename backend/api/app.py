@@ -4,6 +4,8 @@ from sqlalchemy import Column, String, Integer, Boolean
 from flask_cors import CORS
 import uuid
 import os
+from vision_service import get_keywords_from_image
+from rakuten_service import search_product_on_rakuten
 
 app=Flask(__name__)
 CORS(app)
@@ -76,6 +78,34 @@ def login():
             "error":"ユーザー名またはパスワードが正しくありません"
         }),401
 
+
+@app.route("/api/search",methods=["POST"])
+def search():
+    try:
+        image_file=request.files.get("image")
+        if not image_file:
+            return jsonify({"error":"画像がありません"}),400
+        
+        image_content=image_file.read()
+        keywords=get_keywords_from_image(image_content)
+
+        if not keywords:
+            return jsonify({"error":"商品を特定できませんでした"}),404
+        
+        search_results=[]
+        for i in range(5):
+            result=search_product_on_rakuten(keywords[i])
+            search_results.extend(result)
+        
+        return jsonify({
+            "keywords":keywords[:5],
+            "rakutenItems": search_results,
+            "ok": len(search_results) > 0
+        }),200
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": str(e)}),500
+
 @app.route("/api/data", methods=["GET"])
 def get_products():
     products=Product.query.all()
@@ -131,6 +161,7 @@ def upload_product():
         return jsonify({
             "id": new_product.id,
             "name": new_product.name,
+            "price": new_product.price,
             "state": new_product.state,
             "imageUrl": new_product.imageUrl,
             "sellerId": new_product.seller_id,

@@ -1,45 +1,51 @@
+# --- Python / Flask (Backend) ---
 __pycache__/
 *.py[cod]
 *$py.class
 .venv/
 venv/
 env/
-.env
 
+# 認証情報・環境変数
+.env
+*.json
+!manifest.json
+
+# データベース
 *.sqlite
 *.db
 
-backend/api/uploads/
-uploads/
+# アップロード画像
+backend/api/uploads/*
+uploads/*
+!**/uploads/.gitkeep
 
+# --- Node / React (Frontend) ---
 node_modules/
-dist/
-build/
-.eslintcache
-
-.DS_Store
-Thumbs.db
-
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+/frontend/node_modules/
+.pnp
 .pnp.js
 
-# testing
-/coverage
+# ビルド成果物
+dist/
+build/
+/frontend/build/
 
-# production
-/build
+# ログファイル
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# misc
-.DS_Store
+# ローカル環境設定
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# キャッシュ・テスト
+.eslintcache
+/coverage
+
+# --- OS 固有ファイル ---
+.DS_Store
+Thumbs.db
