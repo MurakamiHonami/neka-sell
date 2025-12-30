@@ -43,8 +43,8 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     };
 
     return (
-        <div>
-            <h3>{isRegister ? "ユーザー登録" :"ログイン"}</h3>
+        <div className="items-center justify-start">
+            <h3 className="inline-block bg-yellow-100 text-green-700 rounded-xl opacity-90 p-3 m-1 hover:opacity-80">{isRegister ? "ユーザー登録をしてください" :"ログインしてください"}</h3>
             <form onSubmit={handlesubmit}>
                 <input
                     type="text"
@@ -52,20 +52,22 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                />
+                    className="m-2 border-none text-gray-500 rounded-xl"
+                /><br/>
                 <input
                     type="password"
                     placeholder="パスワード"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                />
-                <button type="submit">
+                    className="m-2 border-none text-gray-500 rounded-xl"
+                /><br/>
+                <button type="submit" className="bg-gray-200 text-green-700 opacity-90 hover:opacity-80 m-2 p-2 rounded-full">
                     {isRegister ? "新規登録" : "ログイン"}
                 </button>
             </form>
             <p
-                style={{cursor: "pointer", color: "blue"}}
+                className="inline-block bg-green-700 p-3 hover:opacity-90"
                 onClick={() => setIsRegister(!isRegister)}
             >
                 {isRegister ? "すでにアカウントをお持ちの方(ログイン)" : "初めてご利用の方(新規登録)"}

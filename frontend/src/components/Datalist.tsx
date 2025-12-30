@@ -1,4 +1,5 @@
 import React, { use, useEffect, useState } from "react";
+import Button from '@mui/material/Button';
 import { Data } from "../types/Data"
 import { fetchData } from "../service/DataService";
 
@@ -137,42 +138,45 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
     };
 
     return (
-        <div>
-            <h2>商品一覧</h2>
-            <ul>
-                {data.map((d) => (
-                    <li key={d.id}>
-                        <strong>{d.name}</strong> - 価格:{d.price}円<br/>
-                        {d.state ? (
-                            currentUser.id === d.sellerId ? (
-                                <span style={{color: "gray"}}>(自分の出品です)</span>
+        <div className="flex flex-col">
+            <div>
+                <h2 className="text-center py-10 px-3 text-4xl text-emerald-200 font-bold font-Roboto [text-shadow:_0_2px_0_var(--tw-shadow-color)] shadow-gray-400">商品一覧</h2>
+                <ul className="grid grid-cols-3">
+                    {data.map((d) => (
+                        <li key={d.id}>
+                            <strong>{d.name}</strong> - 価格:{d.price}円<br/>
+                            {d.state ? (
+                                currentUser.id === d.sellerId ? (
+                                    <span className="text-gray-500">(自分の出品です)</span>
                                 ) : (
-                                <button onClick={()=> purchaseProduct(d.id)}>購入する</button>
+                                    <button onClick={()=> purchaseProduct(d.id)}>購入する</button>
                                 )
                             ): (
-                                <span style={{ color: "red"}}>売り切れ</span>
+                                <span className="text-rose-400">売り切れ</span>
                             )}
-                        <img
-                            src={d.imageUrl}
-                            alt={`${d.name}の画像`}
-                            style={{ width: "100px" }}
-                        />
-                    </li>
-                ))}
-            </ul>
-            <h2>出品</h2>
-            <form>
-                {rakutenItems.length > 0 && (
-                    <div style={{
-                        border: "2px solid aqua",
-                        padding: "10px",
-                        margin: "10px 0",
-                        borderRadius: "8px",
-                    }}>
-                        <h3>出品可能な商品<small>(楽天ブックスから検索)</small></h3>
-                        <div style={{maxHeight: "300px", overflowY: "scroll"}}>
-                            {rakutenItems.map((item, index)=>(
-                                <div
+                            <img
+                                src={d.imageUrl}
+                                alt={`${d.name}の画像`}
+                                style={{ width: "100px" }}
+                                />
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div>
+                <h2 className="text-center py-10 px-3 text-4xl text-emerald-200 font-bold font-Roboto [text-shadow:_0_2px_0_var(--tw-shadow-color)] shadow-gray-400">出品</h2>
+                <form>
+                    {rakutenItems.length > 0 && (
+                        <div style={{
+                            border: "2px solid aqua",
+                            padding: "10px",
+                            margin: "10px 0",
+                            borderRadius: "8px",
+                        }}>
+                            <h3>出品可能な商品<small>(楽天ブックスから検索)</small></h3>
+                            <div style={{maxHeight: "300px", overflowY: "scroll"}}>
+                                {rakutenItems.map((item, index)=>(
+                                    <div
                                     key={index}
                                     style={{
                                         display: "flex",
@@ -187,61 +191,72 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                                             name: item.name,
                                             price: item.price
                                         });
-
+                                        
                                         setMaxPrice(item.price)
                                         setRakutenItems([]);
                                     }}
-                                >
-                                    <img src={item.imageUrl} alt={item.name} style={{ width:"60px", height: "60px", objectFit: "cover"}}/>
-                                    <div>
-                                        <p>{item.name}</p>
-                                        <p>{item.price.toLocaleString()}円</p>
-                                        <p>発売日:{item.releaseDate}</p>
-                                        <button type="button">これを選択</button>
+                                    >
+                                        <img src={item.imageUrl} alt={item.name} style={{ width:"60px", height: "60px", objectFit: "cover"}}/>
+                                        <div>
+                                            <p>{item.name}</p>
+                                            <p>{item.price.toLocaleString()}円</p>
+                                            <p>発売日:{item.releaseDate}</p>
+                                            <button type="button">これを選択</button>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
 
-                    </div>
-                )}
-                <p>
-                    商品名:
-                    <input
-                        type="text"
-                        value={productInfo.name}
-                        onChange={e => setProductInfo({...productInfo, name:e.target.value})}
-                    />
-                </p>
-                <p>
-                    価格:
-                    <input
-                        type="number"
-                        value={productInfo.price}
-                        onChange={e => setProductInfo({...productInfo, price:e.target.valueAsNumber || 0})}
-                        min="0"
-                        max={maxPrice}
-                    />
-                </p>
-                <p>
-                    商品画像:
-                    <input type="file" accept="image/*,.png,.jpg,.jpeg,.gif" onChange={getImage}/>
-                    {previewUrl && (
-                        <div style={{display: "flex" ,gap: "2rem",marginTop: "10px"}}>
-                            <p>プレビュー:</p>
-                            <img
-                                src={previewUrl}
-                                alt="商品画像のプレビュー"
-                                style={{ width: "100px" }}
-                            />
                         </div>
                     )}
-                </p>
-                <button type="button" onClick={checkCanSell}>ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
-                {canSell &&
-                    <button type="button" onClick={submitProduct}>出品</button>
-                }
-            </form>
+                    <p>
+                        商品名:
+                        <input
+                            type="text"
+                            value={productInfo.name}
+                            onChange={e => setProductInfo({...productInfo, name:e.target.value})}
+                            className="p-2  m-2 text-gray-500 border-none rounded-xl"
+                        />
+                    </p>
+                    <p>
+                        価格:
+                        <input
+                            type="number"
+                            value={productInfo.price}
+                            onChange={e => setProductInfo({...productInfo, price:e.target.valueAsNumber || 0})}
+                            min="0"
+                            max={maxPrice}
+                            className="p-2 m-2 text-gray-500 border-none rounded-xl"
+                        />
+                        円
+                    </p>
+                    <p>
+                        商品画像:
+                        <input className="p-2 block w-full text-sm text-slate-500
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-full file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-emerald-50 file:text-emerald-700
+                                    hover:file:bg-emerald-100"
+                                type="file"
+                                accept="image/*,.png,.jpg,.jpeg,.gif"
+                                onChange={getImage}
+                        />
+                        {previewUrl && (
+                            <div style={{display: "flex" ,gap: "2rem",marginTop: "10px"}}>
+                                <p>プレビュー:</p>
+                                <img
+                                    src={previewUrl}
+                                    alt="商品画像のプレビュー"
+                                    style={{ width: "100px" }}
+                                    />
+                            </div>
+                        )}
+                    </p>
+                    <button onClick={checkCanSell} className="bg-yellow-100 text-green-700 rounded-full opacity-90 p-3 m-3 hover:opacity-80">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
+                    <Button variant="contained" color="success" onClick={submitProduct} disabled={!canSell}>{canSell ? "出品" : "出品できません"}</Button>
+                </form>
+                </div>
         </div>
     )
 }

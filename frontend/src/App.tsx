@@ -12,11 +12,14 @@ const App: React.FC = () => {
   return (
     <div>
       <header>
-        <h1>ねかセル</h1>
+        <div className="flex items-center justify-center">
+          <img className="logo w-20 h-20" src="/koara.png"/>
+          <h1 className="py-10 px-3 text-5xl text-emerald-200 font-bold font-Roboto [text-shadow:_0_5px_0_var(--tw-shadow-color)] shadow-blue-500">ねかセル</h1>
+        </div>
         {user && (
           <div>
-            <span>ようこそ、{user.username}さん</span>
-            <button onClick={() => setUser(null)} style={{marginLeft:"10px"}}>ログアウト</button>
+            <p>ようこそ、{user.username}さん</p>
+            <button onClick={() => setUser(null)} className="m-2 p-1 text-green-700 bg-gray-300 rounded-xl hover:opacity-80 text-base">ログアウト</button>
           </div>
         )}
       </header>
