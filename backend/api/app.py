@@ -93,14 +93,14 @@ def search():
             return jsonify({"error":"商品を特定できませんでした"}),404
         
         search_results=[]
-        for i in range(5):
-            result=search_product_on_rakuten(keywords[i])
+        for kw in keywords[:5]:
+            result=search_product_on_rakuten(kw)
             search_results.extend(result)
         
         return jsonify({
             "keywords":keywords[:5],
             "rakutenItems": search_results,
-            "ok": len(search_results) > 0
+            "ok": True
         }),200
     except Exception as e:
         print(f"Error: {e}")

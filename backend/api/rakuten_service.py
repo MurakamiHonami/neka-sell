@@ -2,6 +2,7 @@ import requests
 import os
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 RAKUTEN_APP_ID=os.getenv("RAKUTEN_APP_ID")
@@ -11,9 +12,15 @@ def check_sales_data(sales_date_str):
         return False
     
     try:
-        clean_date=sales_date_str.replace("年","-").replace("月","-").replace("日","")
+        nums = re.findall(r'\d+', sales_date_str)
+        if not nums:
+            return False
 
-        sales_date=datetime.strptime(clean_date, "%Y-%m-%d").date()
+        year = int(nums[0])
+        month = int(nums[1]) if len(nums) > 1 else 1 # 月がない場合は1月とする
+        day = int(nums[2]) if len(nums) > 2 else 1   # 日がない場合は1日とする
+        
+        sales_date = datetime(year, month, day).date()
 
         one_yaer_ago=datetime.now().date() - timedelta(days=365)
 

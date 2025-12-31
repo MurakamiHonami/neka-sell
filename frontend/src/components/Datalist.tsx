@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import { Data } from "../types/Data"
 import { fetchData } from "../service/DataService";
@@ -110,7 +110,8 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
     };
 
 
-    const checkCanSell = async () => {
+    const checkCanSell = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         if (!image) return;
         setRakutenItems([]);
         const formData = new FormData();
@@ -121,8 +122,14 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                 method: "POST",
                 body: formData
             });
+
+            if(!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`サーバーエラー:${response.status} - ${errorText}`)
+            }
     
             const result = await response.json();
+            console.log("バックエンドからのレスポンス:",result);
             if (result.rakutenItems && result.rakutenItems.length > 0) {
                 alert("出品可能な商品が見つかりました");
                 setRakutenItems(result.rakutenItems);
@@ -167,24 +174,15 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                 <h2 className="text-center py-10 px-3 text-4xl text-emerald-200 font-bold font-Roboto [text-shadow:_0_2px_0_var(--tw-shadow-color)] shadow-gray-400">出品</h2>
                 <form>
                     {rakutenItems.length > 0 && (
-                        <div style={{
-                            border: "2px solid aqua",
-                            padding: "10px",
-                            margin: "10px 0",
-                            borderRadius: "8px",
-                        }}>
+                        <div 
+                            className="p-3 my-3 rounded-xl"
+                        >
                             <h3>出品可能な商品<small>(楽天ブックスから検索)</small></h3>
-                            <div style={{maxHeight: "300px", overflowY: "scroll"}}>
+                            <div className="max-h-[300px] overflow-y-auto">
                                 {rakutenItems.map((item, index)=>(
                                     <div
                                     key={index}
-                                    style={{
-                                        display: "flex",
-                                        gap: "10px",
-                                        padding: "10px",
-                                        alignItems: "center",
-                                        cursor: "pointer"
-                                    }}
+                                    className="flex gap-[10px] p-[10px] items-center cursor-pointer"
                                     onClick={()=>{
                                         setProductInfo({
                                             ...productInfo,
@@ -196,7 +194,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                                         setRakutenItems([]);
                                     }}
                                     >
-                                        <img src={item.imageUrl} alt={item.name} style={{ width:"60px", height: "60px", objectFit: "cover"}}/>
+                                        <img src={item.imageUrl} alt={`${item.name}の画像`} className="w-[60px] h-[60px] object-cover"/>
                                         <div>
                                             <p>{item.name}</p>
                                             <p>{item.price.toLocaleString()}円</p>
@@ -253,7 +251,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                             </div>
                         )}
                     </p>
-                    <button onClick={checkCanSell} className="bg-yellow-100 text-green-700 rounded-full opacity-90 p-3 m-3 hover:opacity-80">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
+                    <button onClick={(e) => checkCanSell(e)} className="bg-yellow-100 text-green-700 rounded-full opacity-90 p-3 m-3 hover:opacity-80">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
                     <Button variant="contained" color="success" onClick={submitProduct} disabled={!canSell}>{canSell ? "出品" : "出品できません"}</Button>
                 </form>
                 </div>

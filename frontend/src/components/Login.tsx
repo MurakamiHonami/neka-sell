@@ -67,10 +67,10 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                 </button>
             </form>
             <p
-                className="inline-block bg-green-700 p-3 hover:opacity-90"
+                className="inline-block bg-green-700 text-green-200 p-3 opcity-90 hover:opacity-80 rounded-xl"
                 onClick={() => setIsRegister(!isRegister)}
             >
-                {isRegister ? "すでにアカウントをお持ちの方(ログイン)" : "初めてご利用の方(新規登録)"}
+                {isRegister ? "🍃すでにアカウントをお持ちの方(ログイン)" : "🌱初めてご利用の方(新規登録)"}
             </p>
         </div>
     );

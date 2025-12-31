@@ -13,7 +13,7 @@ const App: React.FC = () => {
     <div>
       <header>
         <div className="flex items-center justify-center">
-          <img className="logo w-20 h-20" src="/koara.png"/>
+          <img className="logo w-20 h-20" src="/koara.png" alt="コアラのロゴ"/>
           <h1 className="py-10 px-3 text-5xl text-emerald-200 font-bold font-Roboto [text-shadow:_0_5px_0_var(--tw-shadow-color)] shadow-blue-500">ねかセル</h1>
         </div>
         {user && (
