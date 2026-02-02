@@ -1,3 +1,9 @@
+# --- OS / Editor 共通 ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
 # --- Python / Flask (Backend) ---
 __pycache__/
 *.py[cod]
@@ -5,47 +11,44 @@ __pycache__/
 .venv/
 venv/
 env/
-
-# 認証情報・環境変数
-.env
-*.json
-!manifest.json
-
-# データベース
-*.sqlite
-*.db
-
-# アップロード画像
-backend/api/uploads/*
-uploads/*
-!**/uploads/.gitkeep
+instance/
+.pytest_cache/
+.coverage
+htmlcov/
 
 # --- Node / React (Frontend) ---
 node_modules/
 /frontend/node_modules/
 .pnp
 .pnp.js
+.eslintcache
+/coverage
 
-# ビルド成果物
+# --- ビルド成果物 ---
 dist/
 build/
 /frontend/build/
 
-# ログファイル
+# --- ログファイル ---
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
-# ローカル環境設定
+# --- 環境変数・認証情報 ---
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# キャッシュ・テスト
-.eslintcache
-/coverage
+# --- データベース ---
+*.sqlite
+*.sqlite3
+*.db
 
-# --- OS 固有ファイル ---
-.DS_Store
-Thumbs.db
+# --- アップロード画像 ---
+backend/uploads/*
+backend/api/uploads/*
+uploads/*
+!**/uploads/.gitkeep

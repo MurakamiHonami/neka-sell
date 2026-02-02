@@ -10,7 +10,9 @@ from rakuten_service import search_product_on_rakuten
 app=Flask(__name__)
 CORS(app)
 
-base_dir=os.path.dirname(__file__)
+base_dir=os.path.dirname(os.path.abspath(__file__))
+backend_dir=os.path.dirname(base_dir)
+UPLOAD_FOLDER=os.path.join(backend_dir,'uploads')
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(base_dir, 'data.sqlite')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
 
@@ -121,7 +123,6 @@ def get_products():
         })
     return jsonify(output)
 
-UPLOAD_FOLDER="./uploads"
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 

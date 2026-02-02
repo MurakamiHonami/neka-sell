@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import { Data } from "../types/Data"
 import { fetchData } from "../service/DataService";
+import "../App.css"
 
 interface DataListProps {
     currentUser: {
@@ -36,7 +37,14 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
             });
     },[]);
     
-    if (loading) return <p>読み込み中...</p>
+    if (loading) return (
+        <div className="loading-container">
+            <div className="text-center">
+                <div className="spinner"></div>
+                <p className="loading-text">読み込み中...</p>
+            </div>
+        </div>
+    )
 
     const getImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(!e.target.files || e.target.files.length === 0) return;
@@ -145,44 +153,47 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="data-list-container">
             <div>
-                <h2 className="text-center py-10 px-3 text-4xl text-emerald-200 font-bold font-Roboto [text-shadow:_0_2px_0_var(--tw-shadow-color)] shadow-gray-400">商品一覧</h2>
-                <ul className="grid grid-cols-3">
+                <h2 className="section-title">商品一覧</h2>
+                <ul className="product-grid">
                     {data.map((d) => (
-                        <li key={d.id}>
-                            <strong>{d.name}</strong> - 価格:{d.price}円<br/>
-                            {d.state ? (
-                                currentUser.id === d.sellerId ? (
-                                    <span className="text-gray-500">(自分の出品です)</span>
-                                ) : (
-                                    <button onClick={()=> purchaseProduct(d.id)}>購入する</button>
-                                )
-                            ): (
-                                <span className="text-rose-400">売り切れ</span>
-                            )}
-                            <img
-                                src={d.imageUrl}
-                                alt={`${d.name}の画像`}
-                                style={{ width: "100px" }}
+                        <li key={d.id} className="product-card">
+                            <div className="card-image-wrapper">
+                                <img
+                                    src={d.imageUrl}
+                                    alt={`${d.name}の画像`}
+                                    className="product-image"
                                 />
+                            </div>
+                            <div className="card-content">
+                                <strong className="product-name">{d.name}</strong>
+                                <div className="product-price">¥{d.price.toLocaleString()}</div>
+                                {d.state ? (
+                                    currentUser.id === d.sellerId ? (
+                                        <span className="badge-owner">(自分の出品です)</span>
+                                    ) : (
+                                        <button onClick={()=> purchaseProduct(d.id)} className="purchase-btn">購入する</button>
+                                    )
+                                ): (
+                                    <span className="badge-sold">売り切れ</span>
+                                )}
+                            </div>
                         </li>
                     ))}
                 </ul>
             </div>
             <div>
-                <h2 className="text-center py-10 px-3 text-4xl text-emerald-200 font-bold font-Roboto [text-shadow:_0_2px_0_var(--tw-shadow-color)] shadow-gray-400">出品</h2>
-                <form>
+                <h2 className="section-title">出品</h2>
+                <form className="sell-form-container">
                     {rakutenItems.length > 0 && (
-                        <div 
-                            className="p-3 my-3 rounded-xl"
-                        >
-                            <h3>出品可能な商品<small>(楽天ブックスから検索)</small></h3>
-                            <div className="max-h-[300px] overflow-y-auto">
+                        <div className="rakuten-suggestion">
+                            <h3 className="suggestion-title">出品可能な商品<small>(楽天ブックスから検索)</small></h3>
+                            <div className="suggestion-list">
                                 {rakutenItems.map((item, index)=>(
                                     <div
                                     key={index}
-                                    className="flex gap-[10px] p-[10px] items-center cursor-pointer"
+                                    className="suggestion-item"
                                     onClick={()=>{
                                         setProductInfo({
                                             ...productInfo,
@@ -194,12 +205,12 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                                         setRakutenItems([]);
                                     }}
                                     >
-                                        <img src={item.imageUrl} alt={`${item.name}の画像`} className="w-[60px] h-[60px] object-cover"/>
-                                        <div>
-                                            <p>{item.name}</p>
-                                            <p>{item.price.toLocaleString()}円</p>
-                                            <p>発売日:{item.releaseDate}</p>
-                                            <button type="button">これを選択</button>
+                                        <img src={item.imageUrl} alt={`${item.name}の画像`} className="suggestion-img"/>
+                                        <div className="suggestion-info">
+                                            <p className="suggestion-name">{item.name}</p>
+                                            <p className="suggestion-price">¥{item.price.toLocaleString()}</p>
+                                            <p className="suggestion-date">発売日:{item.releaseDate}</p>
+                                            <button type="button" className="suggestion-select-btn">これを選択</button>
                                         </div>
                                     </div>
                                 ))}
@@ -207,52 +218,51 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
 
                         </div>
                     )}
-                    <p>
-                        商品名:
+                    <p className="form-group">
+                        <label>商品名:</label>
                         <input
                             type="text"
                             value={productInfo.name}
                             onChange={e => setProductInfo({...productInfo, name:e.target.value})}
-                            className="p-2  m-2 text-gray-500 border-none rounded-xl"
+                            className="form-input"
+                            placeholder="商品の名前を入力"
                         />
                     </p>
-                    <p>
-                        価格:
-                        <input
-                            type="number"
-                            value={productInfo.price}
-                            onChange={e => setProductInfo({...productInfo, price:e.target.valueAsNumber || 0})}
-                            min="0"
-                            max={maxPrice}
-                            className="p-2 m-2 text-gray-500 border-none rounded-xl"
-                        />
-                        円
+                    <p className="form-group">
+                        <label>価格:</label>
+                        <div className="price-input-wrapper">
+                            <input
+                                type="number"
+                                value={productInfo.price}
+                                onChange={e => setProductInfo({...productInfo, price:e.target.valueAsNumber || 0})}
+                                min="0"
+                                max={maxPrice}
+                                className="form-input"
+                                placeholder="0"
+                            />
+                            <span className="currency-symbol">円</span>
+                        </div>
                     </p>
-                    <p>
-                        商品画像:
-                        <input className="p-2 block w-full text-sm text-slate-500
-                                    file:mr-4 file:py-2 file:px-4
-                                    file:rounded-full file:border-0
-                                    file:text-sm file:font-semibold
-                                    file:bg-emerald-50 file:text-emerald-700
-                                    hover:file:bg-emerald-100"
+                    <p className="form-group">
+                        <label>商品画像:</label>
+                        <input className="file-input"
                                 type="file"
                                 accept="image/*,.png,.jpg,.jpeg,.gif"
                                 onChange={getImage}
                         />
                         {previewUrl && (
-                            <div style={{display: "flex" ,gap: "2rem",marginTop: "10px"}}>
-                                <p>プレビュー:</p>
+                            <div className="preview-container">
+                                <p className="preview-label">プレビュー:</p>
                                 <img
                                     src={previewUrl}
                                     alt="商品画像のプレビュー"
-                                    style={{ width: "100px" }}
+                                    className="preview-image"
                                     />
                             </div>
                         )}
                     </p>
-                    <button onClick={(e) => checkCanSell(e)} className="bg-yellow-100 text-green-700 rounded-full opacity-90 p-3 m-3 hover:opacity-80">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
-                    <Button variant="contained" color="success" onClick={submitProduct} disabled={!canSell}>{canSell ? "出品" : "出品できません"}</Button>
+                    <button onClick={(e) => checkCanSell(e)} className="check-btn">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
+                    <Button variant="contained" color="success" onClick={submitProduct} disabled={!canSell} fullWidth sx={{borderRadius: '12px', padding: '12px', fontWeight: 'bold', textTransform: 'none', fontSize: '16px'}}>{canSell ? "出品" : "出品できません"}</Button>
                 </form>
                 </div>
         </div>

@@ -1,0 +1,688 @@
+@charset "utf-8";
+
+/* Google Fontsの読み込み（手書き風フォントと丸ゴシック） */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Kiwi+Maru:wght@300;400;500&display=swap');
+
+/* =========================================
+   Variables (コアラ・自然・温かみのあるパレット)
+   ========================================= */
+:root {
+  /* テーマカラー：ユーカリの緑と、木の温もり */
+  --primary-color: #6c8e83;       /* くすんだセージグリーン */
+  --primary-text-color: #fff;
+  --secondary-color: #a68a76;     /* 優しいブラウン */
+  --secondary-text-color: #fff;
+  
+  --accent-color: #e09b6b;        /* テラコッタオレンジ（アクセント） */
+  
+  --bg-color: #fcfaf5;            /* 生成り色（和紙のような白） */
+  --text-main: #4a4a4a;           /* 墨色（真っ黒ではない） */
+  
+  /* フォント設定：丸みのある優しいフォント */
+  --main-font: "Kiwi Maru", "ヒラギノ丸ゴ Pro", "Hiragino Maru Gothic Pro", "メイリオ", Meiryo, sans-serif;
+  --heading-font: "Caveat", var(--main-font);
+  
+  --border-radius-lg: 20px;       /* 大きめの角丸 */
+  --shadow-soft: 0 4px 15px rgba(108, 142, 131, 0.15); /* 柔らかい影 */
+}
+
+/* =========================================
+   Animations (提供されたコードを流用)
+   ========================================= */
+@keyframes opa1 {
+  0% {opacity: 0; transform: translateY(10px);}
+  100% {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes rotate1 {
+  0% {transform: rotate(0deg);}
+  30% {transform: rotate(-4deg);}
+  80% {transform: rotate(4deg);}
+  100% {transform: rotate(0deg);}
+}
+
+/* =========================================
+   Base Styles
+   ========================================= */
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--main-font);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.8;
+  animation: opa1 0.8s 0.2s both;
+  /* 自然なテクスチャ感を出すための背景パターン（オプション） */
+  background-image: radial-gradient(#dcdcdc 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+button {
+  font-family: var(--main-font);
+  cursor: pointer;
+}
+
+/* =========================================
+   Layout
+   ========================================= */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   Header (Banner)
+   ========================================= */
+.app-header {
+  position: relative;
+  width: 100%;
+  height: 300px; /* バナーの高さ */
+  /* ここで画像を適用 */
+  background-image: url('/koara_image.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* 画像の上に半透明のレイヤーを重ねて文字を見やすくする */
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4); /* 白っぽいフィルター */
+  backdrop-filter: blur(2px);
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2rem 4rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-soft);
+  max-width: 90%;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  /* コアラが揺れるアニメーション */
+  animation-name: rotate1;
+  animation-fill-mode: both;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.app-title-group h1 {
+  font-family: var(--heading-font);
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin: 0;
+  line-height: 1;
+  text-shadow: 2px 2px 0 #fff;
+}
+
+.app-subtitle {
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.user-nav {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-greeting {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  background: #fff;
+  padding: 0.2rem 1rem;
+  border-radius: 100px;
+}
+
+.logout-btn {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+  padding: 0.3rem 1rem;
+  border-radius: 100px;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: var(--secondary-color);
+  color: #fff;
+}
+
+/* =========================================
+   Section Titles
+   ========================================= */
+.section-title {
+  font-family: var(--heading-font);
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--secondary-color);
+  margin-bottom: 2.5rem;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background-color: var(--primary-color);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+/* =========================================
+   Product Grid (DataList)
+   ========================================= */
+.data-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 3fr));
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(108, 142, 131, 0.25);
+}
+
+.card-image-wrapper {
+  position: relative;
+  padding-top: 100%; /* 正方形 */
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.08);
+}
+
+.card-content {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-name {
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  /* 2行で省略 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-price {
+  font-family: var(--heading-font);
+  font-size: 1.6rem;
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* ボタンとバッジ */
+.badge-owner {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--primary-color);
+  background: #f0fdfa;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-top: auto;
+}
+
+.purchase-btn {
+  width: 100%;
+  margin-top: auto;
+  padding: 0.8rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(108, 142, 131, 0.4);
+  transition: 0.3s;
+}
+
+.purchase-btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+.badge-sold {
+  display: block;
+  text-align: center;
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: auto;
+}
+
+/* 売り切れ時の画像エフェクト */
+.product-card:has(.badge-sold) .product-image {
+  filter: grayscale(80%);
+  opacity: 0.7;
+}
+
+/* =========================================
+   Sell Form
+   ========================================= */
+.sell-form-container {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 30px; /* より丸く */
+  box-shadow: var(--shadow-soft);
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  /* 手書き風のボーダーのようなあしらい */
+  border: 4px solid var(--primary-light);
+}
+
+.sell-form-container::before {
+  content: "New Item";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-color);
+  color: #fff;
+  padding: 0.2rem 1.5rem;
+  border-radius: 20px;
+  font-family: var(--heading-font);
+  font-size: 1.2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: var(--text-main);
+  background-color: #fafafa;
+  transition: 0.3s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: #fff;
+}
+
+.price-input-wrapper {
+  position: relative;
+}
+
+.currency-symbol {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.file-input {
+  width: 100%;
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  border: 2px dashed #ccc;
+  cursor: pointer;
+}
+
+.file-input:hover {
+  background: #f0fdfa;
+  border-color: var(--primary-color);
+}
+
+/* プレビュー */
+.preview-container {
+  margin-top: 1rem;
+  background: #fdfaf6;
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.preview-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.check-btn {
+  width: 100%;
+  padding: 1rem;
+  background: #fff;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: 0.3s;
+}
+
+.check-btn:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+/* 楽天サジェスト */
+.rakuten-suggestion {
+  background: #fdfbf7;
+  border: 1px solid #efebe0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.suggestion-title {
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.suggestion-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  display: flex;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 1px solid transparent;
+}
+
+.suggestion-item:hover {
+  border-color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+.suggestion-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.suggestion-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--text-main);
+  margin-bottom: 0.2rem;
+}
+
+.suggestion-price {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.suggestion-select-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 0.3rem;
+}
+
+/* =========================================
+   Login Component
+   ========================================= */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1rem;
+  animation: opa1 0.8s;
+}
+
+.login-message {
+  background: #fff;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.login-message::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top: 10px solid var(--primary-color);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.login-form {
+  background: #fff;
+  padding: 3rem 2.5rem;
+  border-radius: 30px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-input {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid #f0f0f0;
+  border-radius: 50px; /* 丸い入力欄 */
+  background: #fbfbfb;
+  text-align: center;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: #fff;
+}
+
+.login-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(108, 142, 131, 0.3);
+  transition: 0.3s;
+}
+
+.login-submit-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.login-toggle-text {
+  margin-top: 2rem;
+  color: var(--secondary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.login-toggle-text:hover {
+  color: var(--primary-color);
+}
+
+/* =========================================
+   Loading
+   ========================================= */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--primary-light);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-text {
+  color: var(--primary-color);
+  font-family: var(--heading-font);
+  font-size: 1.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* スマホ表示時の調整 */
+@media screen and (max-width: 600px) {
+  .app-title-group h1 {
+    font-size: 2rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .app-header {
+    height: 200px;
+  }
+  .header-content {
+    padding: 1.5rem;
+  }
+}

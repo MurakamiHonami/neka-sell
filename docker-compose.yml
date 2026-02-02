@@ -1,0 +1,29 @@
+services:
+  api:
+    container_name: nakeasell-api
+    build: ./backend
+    ports:
+      - "5000:5000"
+    tty: true
+    volumes:
+      - ./backend:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=api/app.py
+  web:
+    container_name: nekasell-web
+    build:
+      context: ./frontend
+      target: base
+    ports:
+      - "3001:3000"
+    tty: true
+    working_dir: /workspace
+    volumes:
+      - ./frontend:/workspace
+      - /workspace/node_modules
+    command: sh -c "npm install && npm start"
+    depends_on:
+      - api
+  redis:
+    image: redis

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DataList from "./components/Datalist";
 import Login from "./components/Login";
+import "./App.css"
 
 interface UserInfo {
     id: string;
@@ -9,23 +10,33 @@ interface UserInfo {
 
 const App: React.FC = () => {
   const [user, setUser]=useState<UserInfo | null>(null);
+  
+  const handleLoginSuccess = (userInfo: UserInfo) => {
+    setUser(userInfo);
+  };
+  
   return (
-    <div>
-      <header>
-        <div className="flex items-center justify-center">
-          <img className="logo w-20 h-20" src="/koara.png" alt="コアラのロゴ"/>
-          <h1 className="py-10 px-3 text-5xl text-emerald-200 font-bold font-Roboto [text-shadow:_0_5px_0_var(--tw-shadow-color)] shadow-blue-500">ねかセル</h1>
-        </div>
-        {user && (
-          <div>
-            <p>ようこそ、{user.username}さん</p>
-            <button onClick={() => setUser(null)} className="m-2 p-1 text-green-700 bg-gray-300 rounded-xl hover:opacity-80 text-base">ログアウト</button>
+    <div className="app-container">
+      <header className="app-header">
+        <div className="header-content">
+          <div className="logo-section">
+            <img className="app-logo" src="/koara.png" alt="コアラのロゴ"/>
+            <div className="app-title-group">
+              <h1>ねかセル</h1>
+              <p className="app-subtitle">モノを大切にするフリマサイト</p>
+            </div>
           </div>
-        )}
+          {user && (
+            <div className="user-nav">
+              <p className="user-greeting">ようこそ、{user.username}さん</p>
+              <button onClick={() => setUser(null)} className="logout-btn">ログアウト</button>
+            </div>
+          )}
+        </div>
       </header>
-      <main>
+      <main className="main-content">
         {!user ? (
-          <Login onLoginSuccess={(u) => setUser(u)}/>
+          <Login onLoginSuccess={handleLoginSuccess}/>
         ) : (
           <DataList currentUser={user}/>
         )}
