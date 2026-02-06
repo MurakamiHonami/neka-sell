@@ -23,5 +23,6 @@
     - VisionAPI(画像解析)
     - 楽天ブックスAPI(発売日検索)
 ### 4. 起動方法
+- .envファイルに環境変数を設定
 - docker compose up -d
 - `http://localhost:3001`にアクセス

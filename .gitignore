@@ -15,6 +15,7 @@ instance/
 .pytest_cache/
 .coverage
 htmlcov/
+backend/api/gen-lang-client-*.json
 
 # --- Node / React (Frontend) ---
 node_modules/
