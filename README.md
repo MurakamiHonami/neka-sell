@@ -23,14 +23,5 @@
     - VisionAPI(画像解析)
     - 楽天ブックスAPI(発売日検索)
 ### 4. 起動方法
-- フロントエンド
-    - cd frontend
-    - npm install
-    - npm start
-- バックエンド
-    - cd backend/api
-    - pip install requirements.txt
-    - .envファイルにAPIキーを設定
-        - RAKUTEN_APP_ID=あなたのアプリID
-        - KEY_PATH=google-vision-key.json
-    - python app.pyで実行
+- docker compose up -d
+- `http://localhost:3001`にアクセス
