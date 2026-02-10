@@ -1,19 +1,9 @@
 @charset "utf-8";
-
-/* -------------------------------------------
-  外部CSS（必要なら）
-------------------------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
-/* slick は現状使っていなければ不要（入れても害は少ない） */
-/* @import url("https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"); */
 
-
-/* -------------------------------------------
-  CSSカスタムプロパティ（テンプレ配色を移植）
-------------------------------------------- */
 :root {
-  --primary-color: #0dd67a;
+  --primary-color: #1ee78b;
   --primary-text-color: #fff;
   --secondary-color: #242421;
   --secondary-text-color: #fff;
@@ -21,7 +11,6 @@
   --main-font: "ヒラギノ丸ゴ Pro", "Hiragino Maru Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
   --heading-font: "Caveat", var(--main-font);
 
-  /* UI用 */
   --panel-bg: #ffffff;
   --panel-text: #666;
   --muted-text: #999;
@@ -34,9 +23,6 @@
   --focus: rgba(13, 214, 122, 0.35);
 }
 
-/* -------------------------------------------
-  アニメーション（テンプレより）
-------------------------------------------- */
 @keyframes opa1 { 0% {opacity: 0;} 100% {opacity: 1;} }
 @keyframes rotate1 {
   0% {transform: rotate(0deg);}
@@ -51,9 +37,6 @@
   100% {transform: scale(1);}
 }
 
-/* -------------------------------------------
-  inview系（up/down/transform/blur）
-------------------------------------------- */
 .up, .down, .transform1, .transform2 {
   position: relative;
   opacity: 0;
@@ -64,33 +47,27 @@
   transition: 1s 0.5s;
 }
 
-/* up */
+
 .up { bottom: -20px; }
 .upstyle { bottom: 0; }
 
-/* down */
+
 .down { top: -20px; }
 .downstyle { top: 0; }
 
-/* transform1 */
+
 .transform1 { transform: scaleX(0); }
 .transform1style { transform: scaleX(1); }
 
-/* transform2 */
 .transform2 { transform: perspective(400px) translateZ(-70px) rotateX(50deg); }
 .transform2style { transform: perspective(400px) translateZ(0) rotateX(0); }
 
-/* blur */
 .blur { opacity: 0; filter: blur(30px); transform: scale(1.1); }
 .blurstyle { opacity: 1; filter: blur(0); transform: scale(1); transition: 1s 0.5s; }
 
-/* transform3 */
 .transform3 { transform: scale(0); }
 .transform3style { animation: transform3 0.8s ease-out 0.5s both; }
 
-/* -------------------------------------------
-  ベース設定
-------------------------------------------- */
 html, body { height: 100%; }
 body * { box-sizing: border-box; }
 
@@ -129,25 +106,23 @@ input, button, textarea {
   border-radius: 10px;
 }
 
-/* -------------------------------------------
-  Appレイアウト
-------------------------------------------- */
+
 .app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
+
 .app-header {
   position: sticky;
   top: 0;
   z-index: 50;
   padding: 17px 19px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-soft);  
+  background: rgb(255,255,255);
+  backdrop-filter: blur(10px); 
   border-bottom: 1px solid rgba(36,36,33,0.15);
+  box-shadow: var(--shadow-press);
 }
 
 .header-content {
@@ -159,7 +134,6 @@ input, button, textarea {
   justify-content: space-between;
 }
 
-/* ロゴ周り */
 .logo-section {
   display: flex;
   align-items: center;
@@ -191,7 +165,6 @@ input, button, textarea {
   color: rgba(36,36,33,0.85);
 }
 
-/* 右側ユーザー表示 */
 .user-nav {
   display: flex;
   align-items: center;
@@ -203,15 +176,16 @@ input, button, textarea {
   padding: 0 10px;
   border-radius: var(--radius-pill);
   background: rgba(255,255,255,0.85);
-  color: #333;
-  border: 1px solid rgba(36,36,33,0.25);
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
   line-height: 2.0;
+  opacity: 0.7;
 }
 
-/* ログアウトボタン（テンプレの丸ボタン＋押し込み影） */
+
 .logout-btn {
   border: 1px solid var(--secondary-color);
-  background: #fff;
+  background: var(--primary-color);
   color: #000;
   border-radius: var(--radius-pill);
   padding: 10px 16px;
@@ -229,7 +203,6 @@ input, button, textarea {
   box-shadow: 0px 1px var(--secondary-color);
 }
 
-/* Main */
 .main-content {
   flex: 1;
   max-width: 1200px;
@@ -238,19 +211,21 @@ input, button, textarea {
   padding: 18px 16px 40px;
 }
 
-/* セクション見出し（テンプレのh2雰囲気） */
 .section-title {
   font-size: 1.9rem;
   font-weight: bold;
   color: var(--secondary-color);
-  border-bottom: 3px solid var(--secondary-color);
-  padding-left: 0.5rem;
-  margin: 13px 0 11px;
+  position: relative;
+  display: inline-block;
+  margin: 0 0 0 0.25rem;
 }
 
-/* -------------------------------------------
-  Loading
-------------------------------------------- */
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 2.25rem;
+  }
+}
+
 .loading-container {
   min-height: 55vh;
   display: grid;
@@ -274,9 +249,6 @@ input, button, textarea {
   font-weight: 700;
 }
 
-/* -------------------------------------------
-  Login
-------------------------------------------- */
 .login-container {
   max-width: 520px;
   margin: 18px auto;
@@ -317,7 +289,7 @@ input, button, textarea {
 
 .login-submit-btn {
   border: 1px solid var(--secondary-color);
-  background: #fff;
+  background: var(--primary-color);
   color: #000;
   border-radius: var(--radius-pill);
   padding: 12px 16px;
@@ -345,9 +317,6 @@ input, button, textarea {
 }
 .login-toggle-text:hover { opacity: 0.85; }
 
-/* -------------------------------------------
-  DataList レイアウト（一覧＋出品）
-------------------------------------------- */
 .data-list-container {
   display: grid;
   gap: 20px;
@@ -360,9 +329,6 @@ input, button, textarea {
   }
 }
 
-/* -------------------------------------------
-  商品一覧（カード）
-------------------------------------------- */
 .product-grid {
   list-style: none;
   margin: 0;
@@ -387,16 +353,16 @@ input, button, textarea {
   background: #fff;
   color: var(--panel-text);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-press);
   overflow: hidden;
-  border: 1px solid rgba(36,36,33,0.12);
+  border: 1px solid var(--secondary-color);
   display: flex;
   flex-direction: column;
   transition: 0.25s;
 }
 .product-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 8px 10px 26px rgba(0,0,0,0.16);
+  box-shadow: 0px 3px var(--secondary-color);
+  transform: translateY(1px);
 }
 
 .card-image-wrapper {
@@ -431,10 +397,10 @@ input, button, textarea {
   color: #0b6b41;
 }
 
-/* 購入ボタン：テンプレ丸ボタン＋影 */
+
 .purchase-btn {
   border: 1px solid var(--secondary-color);
-  background: #fff;
+  background: var(--primary-color);
   color: #000;
   border-radius: var(--radius-pill);
   padding: 10px 14px;
@@ -443,6 +409,7 @@ input, button, textarea {
   box-shadow: var(--shadow-press);
   transition: 0.2s;
   width: 100%;
+  margin-bottom: 10px;
 }
 .purchase-btn:hover {
   box-shadow: 0px 3px var(--secondary-color);
@@ -453,7 +420,6 @@ input, button, textarea {
   box-shadow: 0px 1px var(--secondary-color);
 }
 
-/* バッジ */
 .badge-owner {
   display: inline-block;
   font-weight: 900;
@@ -476,16 +442,13 @@ input, button, textarea {
   border: 1px solid rgba(36,36,33,0.18);
 }
 
-/* -------------------------------------------
-  出品フォーム
-------------------------------------------- */
 .sell-form-container {
-  background: rgba(255,255,255,0.92);
+  background: rgb(255,255,255);
   color: #333;
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-press);
   padding: 16px 14px;
-  border: 1px solid rgba(36,36,33,0.15);
+  border: 1px solid var(--secondary-color);
   display: grid;
   gap: 10px;
 }
@@ -561,7 +524,6 @@ input, button, textarea {
   border: 1px solid rgba(36,36,33,0.12);
 }
 
-/* ねかセルチェックボタン */
 .check-btn {
   border: 1px solid var(--secondary-color);
   background: #fff;
@@ -592,9 +554,7 @@ input, button, textarea {
   box-shadow: 0px 1px var(--secondary-color);
 }
 
-/* -------------------------------------------
-  楽天サジェスト欄
-------------------------------------------- */
+
 .rakuten-suggestion {
   background: rgba(36,36,33,0.06);
   border: 1px solid rgba(36,36,33,0.15);
@@ -687,23 +647,30 @@ input, button, textarea {
   background: rgba(13,214,122,0.18);
 }
 
-/* -------------------------------------------
-  MUI Button（最低限テーマ合わせ）
-------------------------------------------- */
 .MuiButton-root {
   border-radius: 12px;
   font-weight: 900;
   text-transform: none;
 }
+.check-btn {
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: bold;
+  text-transform: none;
+  font-size: 16px;
+  background-color: var(--primary-color);
+  box-shadow: var(--shadow-press);
+  transition: 0.2s;
+}
+.check-btn:hover {
+  box-shadow: 0px 3px var(--secondary-color);
+  transform: translateY(1px);
+}
 
-/* disabledの見た目（あなたの "出品できません" 対策） */
 .MuiButton-root.Mui-disabled {
   opacity: 0.6;
 }
 
-/* -------------------------------------------
-  便利ユーティリティ（テンプレより一部）
-------------------------------------------- */
 .c { text-align: center !important; }
 .r { text-align: right !important; }
 .l { text-align: left !important; }

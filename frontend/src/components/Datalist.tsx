@@ -262,7 +262,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                         )}
                     </p>
                     <button onClick={(e) => checkCanSell(e)} className="check-btn">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
-                    <Button variant="contained" color="success" onClick={submitProduct} disabled={!canSell} fullWidth sx={{borderRadius: '12px', padding: '12px', fontWeight: 'bold', textTransform: 'none', fontSize: '16px'}}>{canSell ? "出品" : "出品できません"}</Button>
+                    <Button variant="contained" color="success" onClick={submitProduct} disabled={!canSell} fullWidth className="check-btn">{canSell ? "出品" : "出品できません"}</Button>
                 </form>
                 </div>
         </div>
