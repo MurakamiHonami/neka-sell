@@ -37,11 +37,6 @@
   100% {transform: scale(1);}
 }
 
-@font-face {
-  font-family: "pop"; /* 好きな名前を付けられます */
-  src: url("../font/GenEiPOPle-Bk.ttf") format("truetype");
-}
-
 .up, .down, .transform1, .transform2 {
   position: relative;
   opacity: 0;
@@ -127,7 +122,7 @@ input, button, textarea {
   background: rgb(255,255,255);
   backdrop-filter: blur(10px); 
   border-bottom: 1px solid rgba(36,36,33,0.15);
-  box-shadow: var(--shadow-press);
+  box-shadow: var(--shadow-soft);
 }
 
 .header-content {
@@ -137,6 +132,15 @@ input, button, textarea {
   gap: 16px;
   align-items: center;
   justify-content: space-between;
+}
+
+.flex-box {
+  display: flex;
+  gap: 20px;
+}
+
+.data-list-container, .sell-form-panel {
+  flex: 1;
 }
 
 .logo-section {
@@ -155,10 +159,10 @@ input, button, textarea {
 
 .app-title-group h1 {
   margin: 0;
-  font-family: 'pop', var(--heading-font);
+  font-family: var(--heading-font);
   font-weight: 600;
   letter-spacing: 0.02em;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   line-height: 1.1;
   color: var(--secondary-color);
 }
@@ -324,7 +328,7 @@ input, button, textarea {
 
 .data-list-container {
   display: grid;
-  gap: 20px;
+  gap: 0 2rem;
 }
 
 @media (min-width: 900px) {

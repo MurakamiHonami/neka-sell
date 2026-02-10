@@ -153,8 +153,8 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
     };
 
     return (
-        <div className="data-list-container">
-            <div>
+        <div className="flex-box">
+            <div className="data-list-container">
                 <h2 className="section-title">商品一覧</h2>
                 <ul className="product-grid">
                     {data.map((d) => (
@@ -183,7 +183,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                     ))}
                 </ul>
             </div>
-            <div>
+            <div className="sell-form-panel">
                 <h2 className="section-title">出品</h2>
                 <form className="sell-form-container">
                     {rakutenItems.length > 0 && (
