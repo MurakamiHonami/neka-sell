@@ -1,6 +1,7 @@
 # ねかセル
 ## ～ モノを大切にするフリマサイト ～
-<img width="946" height="724" alt="画面イメージ" src="https://github.com/user-attachments/assets/b0bdf963-3e18-4cac-a2b8-697823f5cd73" />
+<img width="936" height="903" alt="画面イメージ" src="https://github.com/user-attachments/assets/2491f374-5969-41b7-9963-d6a6d9b44e94" />
+
 
 ### 1. プロジェクトについて
 昨今、限定商品や人気商品の買い占めによる高額転売が社会問題となっています。<br>
