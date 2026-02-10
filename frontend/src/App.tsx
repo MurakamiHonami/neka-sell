@@ -20,7 +20,7 @@ const App: React.FC = () => {
       <header className="app-header">
         <div className="header-content">
           <div className="logo-section">
-            <img className="app-logo" src="/koara.png" alt="コアラのロゴ"/>
+            <img className="app-logo" src="/logo_koara.png" alt="コアラのロゴ"/>
             <div className="app-title-group">
               <h1>ねかセル</h1>
               <p className="app-subtitle">モノを大切にするフリマサイト</p>

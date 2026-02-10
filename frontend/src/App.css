@@ -155,11 +155,9 @@ input, button, textarea {
 }
 
 .app-logo {
-  width: 56px;
-  height: 56px;
+  width: 5.5rem;
+  height: 5.5rem;
   object-fit: contain;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));
-  animation: rotate1 5s linear infinite;
 }
 
 .app-title-group h1 {
