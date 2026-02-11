@@ -37,9 +37,14 @@
   100% {transform: scale(1);}
 }
 
-@font-face {
+/* @font-face {
   font-family: "pop";
   src: url("../font/GenEiPOPle-Bk.ttf") format("truetype");
+} */
+
+@font-face {
+  font-family: "futemaru";
+  src: url("../font/Futehodo-MaruGothic.otf") format("truetype");
 }
 
 .up, .down, .transform1, .transform2 {
@@ -161,8 +166,8 @@ input, button, textarea {
 }
 
 .app-title-group h1 {
-  margin: 0;
-  font-family: "pop", var(--heading-font);
+  margin: 0 0 0.25rem;
+  font-family: "futemaru", var(--heading-font);
   font-weight: 600;
   letter-spacing: 0.02em;
   font-size: 2.2rem;
@@ -330,14 +335,16 @@ input, button, textarea {
 .login-toggle-text:hover { opacity: 0.85; }
 
 .data-list-container {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   gap: 0 2rem;
 }
 
 @media (min-width: 900px) {
   .data-list-container {
-    grid-template-columns: 1.15fr 0.85fr;
-    align-items: start;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
   }
 }
 
