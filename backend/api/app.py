@@ -6,9 +6,20 @@ import uuid
 import os
 from vision_service import get_keywords_from_image
 from rakuten_service import search_product_on_rakuten
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_talisman import Talisman
 
 app=Flask(__name__)
 CORS(app)
+# コンテンツセキュリティポリシーの設定
+csp = {
+    'default-src': '\'self\'', # 自身のサーバー以外は信用しない
+    'img-src': '*', # 画像は外部からも許可
+    # 自身のJS/CSSとHTML内に直接書かれたものだけ実行を許可
+    'script-src': '\'unsafe-inline\' \'self\'',
+    'style-src': '\'unsafe-inline\' \'self\''
+}
+Talisman(app, content_security_policy=csp, force_https=False)
 
 base_dir=os.path.dirname(os.path.abspath(__file__))
 backend_dir=os.path.dirname(base_dir)
@@ -45,10 +56,12 @@ def register():
     if User.query.filter_by(username=username).first():
         return jsonify({"error":"このユーザー名は既に使用されています"}),400
     
+    # パスワードをハッシュ化して保存
+    hashed_password = generate_password_hash(password)
     new_user=User(
         id=str(uuid.uuid4()),
         username=username,
-        password=password
+        password=hashed_password
     )
 
     db.session.add(new_user)
@@ -64,10 +77,9 @@ def login():
     data=request.get_json()
     username=data.get("username")
     password=data.get("password")
+    user=User.query.filter_by(username=username).first()
 
-    user=User.query.filter_by(username=username, password=password).first()
-
-    if user:
+    if user and check_password_hash(user.password, password):
         return jsonify({
             "message":"ログイン成功",
             "user": {
