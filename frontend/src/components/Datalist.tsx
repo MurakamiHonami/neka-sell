@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import { Data } from "../types/Data"
 import { fetchData } from "../service/DataService";
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import NotInterestedIcon from '@mui/icons-material/NotInterested';
 import "../App.css"
 
 interface DataListProps {
@@ -69,7 +71,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
         formData.append("state", String(productInfo.state));
         formData.append("seller_id", currentUser.id);
 
-        const postImageUri = "http://localhost:5000/api/upload"
+        const postImageUri = "http://127.0.0.1:5000/api/upload"
 
         try {
             const response = await fetch(postImageUri, {
@@ -95,7 +97,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
 
     const purchaseProduct = async (id: string) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/purchase/${id}`,{
+            const response = await fetch(`http://127.0.0.1:5000/api/purchase/${id}`,{
                 method: "PATCH",
             });
             
@@ -126,7 +128,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
         formData.append("image",image);
 
         try {
-            const response = await fetch("http://172.20.0.1:5000/api/search",{
+            const response = await fetch("http:127.0.0.1:5000/api/search",{
                 method: "POST",
                 body: formData
             });
@@ -183,88 +185,91 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                     ))}
                 </ul>
             </div>
-            <div className="sell-form-panel">
+            <div>
                 <h2 className="section-title">出品</h2>
-                <form className="sell-form-container">
-                    {rakutenItems.length > 0 && (
-                        <div className="rakuten-suggestion">
-                            <h3 className="suggestion-title">出品可能な商品<small>(楽天ブックスから検索)</small></h3>
-                            <div className="suggestion-list">
-                                {rakutenItems.map((item, index)=>(
-                                    <div
-                                    key={index}
-                                    className="suggestion-item"
-                                    onClick={()=>{
-                                        setProductInfo({
-                                            ...productInfo,
-                                            name: item.name,
-                                            price: item.price
-                                        });
-                                        
-                                        setMaxPrice(item.price)
-                                        setRakutenItems([]);
-                                    }}
-                                    >
-                                        <img src={item.imageUrl} alt={`${item.name}の画像`} className="suggestion-img"/>
-                                        <div className="suggestion-info">
-                                            <p className="suggestion-name">{item.name}</p>
-                                            <p className="suggestion-price">¥{item.price.toLocaleString()}</p>
-                                            <p className="suggestion-date">発売日:{item.releaseDate}</p>
-                                            <button type="button" className="suggestion-select-btn">これを選択</button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                <div className="sell-form-panel">
 
-                        </div>
-                    )}
-                    <p className="form-group">
-                        <label>商品名:</label>
-                        <input
-                            type="text"
-                            value={productInfo.name}
-                            onChange={e => setProductInfo({...productInfo, name:e.target.value})}
-                            className="form-input"
-                            placeholder="商品の名前を入力"
-                        />
-                    </p>
-                    <p className="form-group">
-                        <label>価格:</label>
-                        <div className="price-input-wrapper">
-                            <input
-                                type="number"
-                                value={productInfo.price}
-                                onChange={e => setProductInfo({...productInfo, price:e.target.valueAsNumber || 0})}
-                                min="0"
-                                max={maxPrice}
-                                className="form-input"
-                                placeholder="0"
-                            />
-                            <span className="currency-symbol">円</span>
-                        </div>
-                    </p>
-                    <p className="form-group">
-                        <label>商品画像:</label>
-                        <input className="file-input"
-                                type="file"
-                                accept="image/*,.png,.jpg,.jpeg,.gif"
-                                onChange={getImage}
-                        />
-                        {previewUrl && (
-                            <div className="preview-container">
-                                <p className="preview-label">プレビュー:</p>
-                                <img
-                                    src={previewUrl}
-                                    alt="商品画像のプレビュー"
-                                    className="preview-image"
-                                    />
+                    <form className="sell-form-container">
+                        {rakutenItems.length > 0 && (
+                            <div className="rakuten-suggestion">
+                                <h3 className="suggestion-title">出品可能な商品<small>(楽天ブックスから検索)</small></h3>
+                                <div className="suggestion-list">
+                                    {rakutenItems.map((item, index)=>(
+                                        <div
+                                        key={index}
+                                        className="suggestion-item"
+                                        onClick={()=>{
+                                            setProductInfo({
+                                                ...productInfo,
+                                                name: item.name,
+                                                price: item.price
+                                            });
+                                            
+                                            setMaxPrice(item.price)
+                                            setRakutenItems([]);
+                                        }}
+                                        >
+                                            <img src={item.imageUrl} alt={`${item.name}の画像`} className="suggestion-img"/>
+                                            <div className="suggestion-info">
+                                                <p className="suggestion-name">{item.name}</p>
+                                                <p className="suggestion-price">¥{item.price.toLocaleString()}</p>
+                                                <p className="suggestion-date">発売日:{item.releaseDate}</p>
+                                                <button type="button" className="suggestion-select-btn">これを選択</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
                             </div>
                         )}
-                    </p>
-                    <button onClick={(e) => checkCanSell(e)} className="check-btn">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
-                    <Button variant="contained" color="success" onClick={submitProduct} disabled={!canSell} fullWidth className="check-btn">{canSell ? "出品" : "出品できません"}</Button>
-                </form>
+                        <p className="form-group">
+                            <label>商品名:</label>
+                            <input
+                                type="text"
+                                value={productInfo.name}
+                                onChange={e => setProductInfo({...productInfo, name:e.target.value})}
+                                className="form-input"
+                                placeholder="商品の名前を入力"
+                                />
+                        </p>
+                        <p className="form-group">
+                            <label>価格:</label>
+                            <div className="price-input-wrapper">
+                                <input
+                                    type="number"
+                                    value={productInfo.price}
+                                    onChange={e => setProductInfo({...productInfo, price:e.target.valueAsNumber || 0})}
+                                    min="0"
+                                    max={maxPrice}
+                                    className="form-input"
+                                    placeholder="0"
+                                    />
+                                <span className="currency-symbol">円</span>
+                            </div>
+                        </p>
+                        <p className="form-group">
+                            <label>商品画像:</label>
+                            <input className="file-input"
+                                    type="file"
+                                    accept="image/*,.png,.jpg,.jpeg,.gif"
+                                    onChange={getImage}
+                                    />
+                            {previewUrl && (
+                                <div className="preview-container">
+                                    <p className="preview-label">プレビュー:</p>
+                                    <img
+                                        src={previewUrl}
+                                        alt="商品画像のプレビュー"
+                                        className="preview-image"
+                                        />
+                                </div>
+                            )}
+                        </p>
+                        <button onClick={(e) => checkCanSell(e)} className="check-btn">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
+                        <Button  startIcon={canSell ? <TaskAltIcon/> : <NotInterestedIcon/>} variant="contained" color="success" onClick={submitProduct} disabled={!canSell} fullWidth className="check-btn">{canSell ? "出品" : "出品できません"}</Button>
+                    </form>
                 </div>
+            </div>
         </div>
     )
 }

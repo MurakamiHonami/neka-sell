@@ -164,7 +164,7 @@ def upload_product():
             name=name,
             price=price,
             state=(state_str.lower() == "true"),
-            imageUrl=f"http://localhost:5000/uploads/{new_filename}",
+            imageUrl=f"http://172.20.0.3:5000/uploads/{new_filename}",
             seller_id=seller_id,
         )
 
