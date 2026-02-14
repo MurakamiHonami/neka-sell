@@ -1,6 +1,6 @@
 # ねかセル
 ## ～ モノを大切にするフリマサイト ～
-<img width="934" height="895" alt="画面イメージ" src="https://github.com/user-attachments/assets/eb2111c9-6440-417d-81f7-db32f8b7c1f6" />
+<img width="930" height="878" alt="画面イメージ" src="https://github.com/user-attachments/assets/3b19716a-671d-49b0-8f15-69c2ad233181" />
 
 
 ### 1. プロジェクトについて
