@@ -47,6 +47,10 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
+@app.route("/")
+def health_check():
+    return "OK", 200
+
 @app.route("/api/register", methods=["POST"])
 def register():
     data=request.get_json()
