@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd /home/ec2-user/app
+cd /home/ec2-user/app/api
 
 pkill -f "python3 app.py" || true
 
