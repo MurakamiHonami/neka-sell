@@ -223,7 +223,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
 
                             </div>
                         )}
-                        <p className="form-group">
+                        <div className="form-group">
                             <label>商品名:</label>
                             <input
                                 type="text"
@@ -232,8 +232,8 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                                 className="form-input"
                                 placeholder="商品の名前を入力"
                                 />
-                        </p>
-                        <p className="form-group">
+                        </div>
+                        <div className="form-group">
                             <label>価格:</label>
                             <div className="price-input-wrapper">
                                 <input
@@ -247,8 +247,8 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                                     />
                                 <span className="currency-symbol">円</span>
                             </div>
-                        </p>
-                        <p className="form-group">
+                        </div>
+                        <div className="form-group">
                             <label>商品画像:</label>
                             <input className="file-input"
                                     type="file"
@@ -265,7 +265,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                                         />
                                 </div>
                             )}
-                        </p>
+                        </div>
                         <button onClick={(e) => checkCanSell(e)} className="check-btn">⚠️ねかセルチェック<small>(発売から1年以上経過しているか確認)</small></button><br/>
                         <Button  startIcon={canSell ? <TaskAltIcon/> : <NotInterestedIcon/>} variant="contained" color="success" onClick={submitProduct} disabled={!canSell} fullWidth className="check-btn">{canSell ? "出品" : "出品できません"}</Button>
                     </form>
