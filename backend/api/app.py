@@ -173,7 +173,7 @@ def upload_product():
             name=name,
             price=price,
             state=(state_str.lower() == "true"),
-            imageUrl=f"/uploads/{new_filename}",
+            imageUrl=f"{API_URL}/uploads/{new_filename}",
             seller_id=seller_id,
         )
 
