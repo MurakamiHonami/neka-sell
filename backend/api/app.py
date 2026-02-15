@@ -8,9 +8,9 @@ from vision_service import get_keywords_from_image
 from rakuten_service import search_product_on_rakuten
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_talisman import Talisman
-from dotenv import load_env
+from dotenv import load_dotenv
 
-load_env()
+load_dotenv()
 
 API_URL=os.getenv("API_URL")
 
