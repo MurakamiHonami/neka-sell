@@ -580,6 +580,7 @@ input, button, textarea {
   border: 1px solid rgba(36,36,33,0.15);
   border-radius: 18px;
   padding: 12px;
+  width: fit-content;
 }
 
 .suggestion-title {

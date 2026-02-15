@@ -4,6 +4,7 @@ import { Data } from "../types/Data"
 import { fetchData } from "../service/DataService";
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import NotInterestedIcon from '@mui/icons-material/NotInterested';
+import { API_URL } from "./config";
 import "../App.css"
 
 interface DataListProps {
@@ -71,7 +72,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
         formData.append("state", String(productInfo.state));
         formData.append("seller_id", currentUser.id);
 
-        const postImageUri = "http://127.0.0.1:5000/api/upload"
+        const postImageUri = `${API_URL}/api/upload`
 
         try {
             const response = await fetch(postImageUri, {
@@ -97,7 +98,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
 
     const purchaseProduct = async (id: string) => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/api/purchase/${id}`,{
+            const response = await fetch(`${API_URL}/api/purchase/${id}`,{
                 method: "PATCH",
             });
             
@@ -128,7 +129,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
         formData.append("image",image);
 
         try {
-            const response = await fetch("http:127.0.0.1:5000/api/search",{
+            const response = await fetch(`${API_URL}/api/search`,{
                 method: "POST",
                 body: formData
             });
