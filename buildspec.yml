@@ -8,6 +8,11 @@ phases:
       - cd frontend
       - echo "Installing dependencies..."
       - npm install
+  pre_build:
+    commands:
+      - echo "REACT_APP_API_URL=${REACT_APP_API_URL}" > .env
+      - echo "作成された .env の中身を確認します:"
+      - cat .env
   build:
     commands:
       - echo "Building React app..."
