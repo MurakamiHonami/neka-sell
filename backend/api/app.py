@@ -8,6 +8,11 @@ from vision_service import get_keywords_from_image
 from rakuten_service import search_product_on_rakuten
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_talisman import Talisman
+from dotenv import load_env
+
+load_env()
+
+API_URL=os.getenv("API_URL")
 
 app=Flask(__name__)
 CORS(app)
@@ -168,7 +173,7 @@ def upload_product():
             name=name,
             price=price,
             state=(state_str.lower() == "true"),
-            imageUrl=f"http://172.20.0.3:5000/uploads/{new_filename}",
+            imageUrl=f"/uploads/{new_filename}",
             seller_id=seller_id,
         )
 
