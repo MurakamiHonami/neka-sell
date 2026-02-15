@@ -4,6 +4,7 @@ set -e
 cd /home/ec2-user/app
 
 aws ssm get-parameter \
+  --region ap-northeast-1 \
   --name "/neka-sell/google-credentials" \
   --with-decryption \
   --query "Parameter.Value" \
