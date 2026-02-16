@@ -186,7 +186,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser}) => {
                     ))}
                 </ul>
             </div>
-            <div>
+            <div className="form-container">
                 <h2 className="section-title">出品</h2>
                 <div className="sell-form-panel">
 

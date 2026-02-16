@@ -163,7 +163,9 @@ input, button, textarea {
   }
 }
 
-.data-list-container, .sell-form-panel {
+
+
+.data-list-container, .form-container {
   flex: 1;
 }
 
