@@ -41,7 +41,11 @@ export default function FeedbackDialog(props: SimpleDialogProps) {
                     value={feedbackValue}
                     onChange={(e) => setFeedbackValue(e.target.value)}
                 />
-                <Button onClick={feedbackPost}>投稿</Button>
+                <button
+                    className="px-4 py-3 my-5 rounded-xl bg-[color:rgba(29,231,140,0.2)] text-[#1de78c] font-semibold hover:bg-[#1de78c] hover:text-black transition-all w-full"
+                    onClick={feedbackPost}
+                >投稿
+                </button>
             </div>
         </Dialog>
     )

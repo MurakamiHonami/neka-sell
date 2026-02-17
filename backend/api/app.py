@@ -49,12 +49,45 @@ class User(db.Model):
     username=Column(String(50), unique=True, nullable=False)
     password=Column(String(100), nullable=False)
 
+class Feedback(db.Model):
+    __tablename__ = "feedbacks"
+    id=Column(String(36), primary_key=True)
+    feedback=Column(String(100), nullable=True)
+
 with app.app_context():
     db.create_all()
 
 @app.route("/")
 def health_check():
     return "OK", 200
+
+@app.route("/feedback",methods=["POST"])
+def post_feedback():
+    try:
+        data = request.get_json()
+
+        if not data:
+             return jsonify({"error": "データが空です"}), 400
+
+        feedback_content = data.get("feedback")
+
+        if not feedback_content:
+             return jsonify({"error": "フィードバック内容がありません"}), 400
+
+        new_feedback = Feedback(
+            id=str(uuid.uuid4()),
+            feedback=feedback_content
+        )
+        db.session.add(new_feedback)
+        db.session.commit()
+
+        return jsonify({
+            "message": "フィードバック投稿完了"
+        }), 201
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "サーバー内部エラーが発生しました"}), 500
 
 @app.route("/api/register", methods=["POST"])
 def register():

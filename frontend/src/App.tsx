@@ -18,7 +18,7 @@ const App: React.FC = () => {
   return (
     <div className="dark min-h-screen bg-[#f6f8f7] dark:bg-[#11211a] text-slate-800 dark:text-slate-100 font-[Plus Jakarta Sans,sans-serif]">
       <header className="sticky top-0 z-50 bg-[color:rgba(255,255,255,0.8)] dark:bg-[color:rgba(17,33,26,0.8)] backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 pt-6 pb-4 px-4">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-2xl bg-[#1de78c] flex items-center justify-center border-2 border-[color:rgba(29,231,140,0.4)] overflow-hidden text-xs font-bold text-[#11211a] shadow-[0_4px_0_0_rgba(255,255,255,0.2)]">
               <img src="/logo_koara.png" alt="" className="w-full h-full object-contain" />
