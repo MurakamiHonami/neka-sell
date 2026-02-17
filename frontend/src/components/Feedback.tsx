@@ -33,19 +33,21 @@ export default function FeedbackDialog(props: SimpleDialogProps) {
 
     return (
         <Dialog onClose={onClose} open={open}>
-            <h1 className="text-2xl pt-2 px-2 font-medium">フィードバックを投稿</h1>
-            <div className="p-2">
-                <p className="pb-2">このサービスに追加してほしい機能や改善点があれば教えてください。</p>
-                <textarea
-                    className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
-                    value={feedbackValue}
-                    onChange={(e) => setFeedbackValue(e.target.value)}
-                />
-                <button
-                    className="px-4 py-3 my-5 rounded-xl bg-[color:rgba(29,231,140,0.2)] text-[#1de78c] font-semibold hover:bg-[#1de78c] hover:text-black transition-all w-full"
-                    onClick={feedbackPost}
-                >投稿
-                </button>
+            <div className="m-2">
+                <h1 className="text-2xl pt-2 px-2 font-medium">フィードバックを投稿</h1>
+                <div className="p-2">
+                    <p className="pb-2">このサービスに追加してほしい機能や改善点があれば教えてください。</p>
+                    <textarea
+                        className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
+                        value={feedbackValue}
+                        onChange={(e) => setFeedbackValue(e.target.value)}
+                    />
+                    <button
+                        className="px-4 py-3 my-5 rounded-xl bg-[color:rgba(29,231,140,0.2)] text-[#1de78c] font-semibold hover:bg-[#1de78c] hover:text-black transition-all w-full"
+                        onClick={feedbackPost}
+                    >投稿
+                    </button>
+                </div>
             </div>
         </Dialog>
     )

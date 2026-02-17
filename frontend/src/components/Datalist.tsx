@@ -30,6 +30,26 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
   const [rakutenItems, setRakutenItems] = useState<any[]>([]);
   const [maxPrice, setMaxPrice] = useState(0);
   const [open, setOpen]=useState(false);
+  const [inputValue, setInputValue]=useState<string>();
+  const [showData, setShowData] = useState<Data[]>([]);
+
+  const handleInputChange=(e: React.ChangeEvent<HTMLInputElement>)=> {
+    setInputValue(e.target.value)
+    search(e.target.value)
+  }
+
+  const search = (value: string) => {
+    if (value==="") {
+      setData(showData);
+      return;
+    }
+    const searchedProducts = showData.filter((d) => {
+      const matchName = d.name.includes(value);
+      return matchName;
+    });
+
+    setData(searchedProducts);
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,6 +63,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
     fetchData()
       .then((data) => {
         setData(data);
+        setShowData(data);
         setLoading(false);
       })
       .catch(() => {
@@ -94,6 +115,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
       const result: Data = await response.json();
 
       setData([...data, result]);
+      setShowData([...showData, result]);
       setProductInfo({ name: "", price: 0, state: true });
       setImage(undefined);
       setPreviewUrl(null);
@@ -112,7 +134,9 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
         throw new Error(errorData.error || "購入に失敗しました");
       }
 
-      setData((prevData) => prevData.map((item) => (item.id === id ? { ...item, state: false } : item)));
+      const updateList = (list: Data[]) => list.map((item) => (item.id === id ? { ...item, state: false } : item));
+      setData((prev) => updateList(prev));
+      setShowData((prev) => updateList(prev));
       alert("購入完了");
     } catch {
       alert("購入に失敗しました");
@@ -153,6 +177,18 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
 
   return (
     <div className="flex flex-col justify-center">
+      <div className="pb-2 space-y-2">
+        <h2 className="text-xl font-bold relative inline-block">
+          検索
+        </h2>
+        <input
+          className="rounded-xl bg-neutral-secondary-medium border border-default-medium text-heading text-sm focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="商品名を入力..."
+        />
+      </div>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="lg:col-span-2 flex-1">
           <div className="flex items-center justify-between mb-4 px-1">
