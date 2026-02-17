@@ -182,7 +182,7 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
           検索
         </h2>
         <input
-          className="rounded-xl bg-neutral-secondary-medium border border-default-medium text-heading text-sm focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
+          className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-slate-400"
           type="text"
           value={inputValue}
           onChange={handleInputChange}
