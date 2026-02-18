@@ -177,8 +177,8 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="pb-2 space-y-2">
-        <h2 className="text-xl font-bold relative inline-block">
+      <div className="pb-4 space-y-2">
+        <h2 className="pb-2 px-1 text-xl font-bold relative inline-block">
           検索
         </h2>
         <input
@@ -191,17 +191,21 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
       </div>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="lg:col-span-2 flex-1">
-          <div className="flex items-center justify-between mb-4 px-1">
+          <div className="pb-2 flex items-center justify-between mb-4 px-1">
             <h2 className="text-xl font-bold relative inline-block">
               商品
               <span className="absolute -bottom-1 left-0 w-1/2 h-1 bg-[#1de78c] rounded-full" />
             </h2>
           </div>
-          <ul className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-            {data.map((d) => (
+          {data.length===0 ? (
+              <p className="max-w-2xl p-2 text-lg text-center font-semibold w-full">商品が見つかりませんでした</p>
+            ):
+            (
+              <ul className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              {data.map((d) => (
               <li
                 key={d.id}
-                className="bg-white dark:bg-[#1a2c24] p-3 rounded-[1rem] flex flex-col shadow-sm border border-slate-100 dark:border-slate-800/50 hover:border-[color:rgba(29,231,140,0.5)] transition-colors"
+                className="col-span-1 bg-white dark:bg-[#1a2c24] p-3 rounded-[1rem] flex flex-col shadow-sm border border-slate-100 dark:border-slate-800/50 hover:border-[color:rgba(29,231,140,0.5)] transition-colors"
               >
                 <div className="w-full aspect-square rounded-xl overflow-hidden relative">
                   <img src={d.imageUrl} alt={`${d.name}の画像`} className="w-full h-full object-contain transition-transform duration-300 hover:scale-105" />
@@ -236,11 +240,12 @@ const DataList: React.FC<DataListProps> = ({ currentUser }) => {
                 </div>
               </li>
             ))}
-          </ul>
+            </ul>
+            )}
         </div>
 
         <div className="flex-1 space-y-4">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="pb-2 flex items-center gap-2 mb-2">
             <h2 className="text-xl font-bold relative inline-block">
               出品
               <span className="absolute -bottom-1 left-0 w-1/2 h-1 bg-[#1de78c] rounded-full" />

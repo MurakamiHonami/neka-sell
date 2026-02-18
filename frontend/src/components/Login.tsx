@@ -55,7 +55,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1de78c]"
+            className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-slate-400"
           />
           <input
             type="password"
@@ -63,7 +63,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1de78c]"
+            className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-slate-400" 
           />
           <button type="submit" className="w-full bg-[#1de78c] text-[#11211a] px-6 py-3 rounded-xl font-bold text-sm shadow-[0_8px_20px_rgba(29,231,140,0.35)] active:translate-y-[1px] transition-all">
             {isRegister ? "新規登録" : "ログイン"}
